@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * deeplink 原生启动原生页面，可支持跨应用启动。
+     * deeplink 原生启动原生页面，可支持应用内跳转及跨应用启动。
      */
     private void openNativeFormNative() {
         String url = "xp://detail";
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * deeplink Html启动原生页面，可支持服务器访问Html启动原生页面。
+     * deeplink Html启动原生页面，可支持本地html加载及服务器访问Html启动原生页面。
      */
     private void openNativeFormHtml() {
         WebView activityDataWebview = (WebView) findViewById(R.id.activity_main_webview);
