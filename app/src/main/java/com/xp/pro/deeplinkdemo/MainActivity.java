@@ -33,11 +33,10 @@ public class MainActivity extends AppCompatActivity {
                 openNativeFormHtml();
             }
         });
-
     }
 
     /**
-     * deeplink原生启动原生页面
+     * deeplink 原生启动原生页面，可支持跨应用启动。
      */
     private void openNativeFormNative() {
         String url = "xp://detail";
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * deeplinkHtml启动原生页面
+     * deeplink Html启动原生页面，可支持服务器访问Html启动原生页面。
      */
     private void openNativeFormHtml() {
         WebView activityDataWebview = (WebView) findViewById(R.id.activity_main_webview);
@@ -58,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         activityDataWebview.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                //通过外部浏览器启动可不写此部分
                 String url = request.getUrl().toString();
                 Uri uri = Uri.parse(url);
                 if (uri.getScheme().equals("xp") && uri.getHost().equals("detail")) {
@@ -65,14 +65,13 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setData(uri);
                     startActivity(intent);
-
-                } else {
+                } else
+                    {
                     view.loadUrl(url);
                 }
                 return true;
             }
         });
-
         activityDataWebview.loadUrl("file:///android_asset/detail.html");
     }
 }
