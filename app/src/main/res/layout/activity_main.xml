@@ -16,6 +16,12 @@
         android:layout_height="wrap_content"
         android:text="Open HTML" />
 
+    <Button
+        android:id="@+id/activity_main_js_open_native"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Js Open Native Method" />
+
     <WebView
         android:id="@+id/activity_main_webview"
         android:layout_width="match_parent"

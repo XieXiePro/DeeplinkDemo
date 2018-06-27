@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -19,8 +20,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button openNative=(Button) findViewById(R.id.activity_main_open_native);
-        Button openHtml=(Button) findViewById(R.id.activity_main_open_html);
+        Button openNative = (Button) findViewById(R.id.activity_main_open_native);
+        Button openHtml = (Button) findViewById(R.id.activity_main_open_html);
+        Button openJs = (Button) findViewById(R.id.activity_main_js_open_native);
         openNative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -31,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openNativeFormHtml();
+            }
+        });
+        openJs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openNativeFormJs();
             }
         });
     }
@@ -65,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setData(uri);
                     startActivity(intent);
-                } else
-                    {
+                } else {
                     view.loadUrl(url);
                 }
                 return true;
@@ -74,4 +81,26 @@ public class MainActivity extends AppCompatActivity {
         });
         activityDataWebview.loadUrl("file:///android_asset/detail.html");
     }
+
+    /**
+     * JS方式启动原生页面，可支持html启动原生页面。
+     */
+    private void openNativeFormJs() {
+        WebView activityDataWebview = (WebView) findViewById(R.id.activity_main_webview);
+        activityDataWebview.getSettings().setJavaScriptEnabled(true);
+        activityDataWebview.loadUrl("file:///android_asset/index.html");
+        //将java中类映射到js中   jsObj为该类的一个对象名
+//        activityDataWebview.addJavascriptInterface(this, "jsObj");
+        activityDataWebview.addJavascriptInterface(new JsManager(), "jsObj");
+    }
+
+//    @JavascriptInterface
+//    public void openNative() {
+//        String url = "xp://detail";
+//        Uri uri = Uri.parse(url);
+//        Toast.makeText(MainActivity.this, "Js open Android native App success!", Toast.LENGTH_LONG).show();
+//        Intent intent = new Intent();
+//        intent.setData(uri);
+//        startActivity(intent);
+//    }
 }
